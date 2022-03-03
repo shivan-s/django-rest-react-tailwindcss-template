@@ -2,11 +2,11 @@ from .base import *  # noqa F403
 
 # setting
 DEBUG = False
-ALLOWED_HOSTS = [
-    "localhost",
-    "0.0.0.0",
-    # TODO: where is this going to be hosted?
-]
+# ALLOWED_HOSTS = [
+#     "localhost",
+#     "0.0.0.0",
+#     # TODO: where is this going to be hosted?
+# ]
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
@@ -14,9 +14,6 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-
-DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
-GS_BUCKET_NAME = "food-vision-images_prod"
 
 # logging
 LOGGING = {
