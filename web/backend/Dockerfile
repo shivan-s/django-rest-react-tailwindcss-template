@@ -1,4 +1,4 @@
-FROM nikolaik/python-nodejs:latest
+FROM python:3.10-slim
 
 ENV PYTHONDONTWEITEBYTECODE 1
 ENV PYTHONNUNBUFFERED 1

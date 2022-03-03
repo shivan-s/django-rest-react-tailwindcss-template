@@ -1,26 +1,39 @@
 version: "3.8"
 
 services:
-  web:
-    container_name: web
+  web-frontend:
+    container_name: web-frontend
     build:
-      context: ./web
+      context: ./web/frontend
+      dockerfile: Dockerfile
+    command: npm start --prefix ./web/frontend/
+    volumes:
+      - .:/code
+    ports:
+      - 3000:3000
+      - 35729:35279
+    stdin_open: true
+    depends_on:
+      - db
+      - web-backend
+
+  web-backend:
+    container_name: web-backend
+    build:
+      context: ./web/backend/
       dockerfile: Dockerfile
     command: >
-      sh -c "pipenv run python /code/web/manage.py makemigrations &&
-             pipenv run python /code/web/manage.py migrate &&
-             pipenv run python /code/web/manage.py runserver 0.0.0.0:8000"
+      sh -c "pipenv run python /code/web/backend/manage.py makemigrations &&
+             pipenv run python /code/web/backend/manage.py migrate &&
+             pipenv run python /code/web/backend/manage.py runserver 0.0.0.0:8000"
     env_file:
-      - ./web/.env
+      - .env
     environment:
       - DJANGO_DEVELOPMENT=yes
     volumes:
       - .:/code
     ports:
       - 8000:8000
-      - 3000:3000
-      - 35729:35279
-    stdin_open: true
     depends_on:
       - db
 
@@ -28,7 +41,7 @@ services:
     container_name: db
     image: "postgres:13.6"
     env_file:
-      - ./web/.env
+      - .env
     ports:
       - "5432:5432"
     volumes:
